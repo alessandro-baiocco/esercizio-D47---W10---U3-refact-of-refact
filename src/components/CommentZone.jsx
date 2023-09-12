@@ -9,6 +9,7 @@ const CommentZone = (props) => {
   const [error, setError] = useState(false);
   const [alert, setAlert] = useState(true);
   const [status, setStatus] = useState("");
+  const [first, setFirst] = useState(true);
 
   const elimina = async (id) => {
     try {
@@ -30,26 +31,29 @@ const CommentZone = (props) => {
   };
 
   const fetchatutto = async (e) => {
-    setComment("");
-    try {
-      const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments`, {
-        headers: {
-          Authorization:
-            "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZhMDFiOWU4NDIyNzAwMTRjMzI2NzgiLCJpYXQiOjE2OTQxMDYwNDEsImV4cCI6MTY5NTMxNTY0MX0._hgr0vEr6UjtJtfjfmSqCU3Cl0ZLLLXpFwWscccB2NI",
-        },
-      });
-      if (response.ok) {
-        const Data = await response.json();
-        setComment(Data);
-        setLoading(false);
-      } else {
-        setLoading(false);
-        setError(true);
-        setStatus(response.status);
+    setLoading(true);
+    if (!first) {
+      try {
+        const response = await fetch(`https://striveschool-api.herokuapp.com/api/books/${props.asinId}/comments`, {
+          headers: {
+            Authorization:
+              "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2NGZhMDFiOWU4NDIyNzAwMTRjMzI2NzgiLCJpYXQiOjE2OTQxMDYwNDEsImV4cCI6MTY5NTMxNTY0MX0._hgr0vEr6UjtJtfjfmSqCU3Cl0ZLLLXpFwWscccB2NI",
+          },
+        });
+        if (response.ok) {
+          const Data = await response.json();
+          setComment(Data);
+          setLoading(false);
+        } else {
+          setLoading(false);
+          setError(true);
+          setStatus(response.status);
+        }
+      } catch (err) {
+        console.log(err);
       }
-    } catch (err) {
-      console.log(err);
     }
+    setFirst(false);
   };
 
   // componentDidUpdate(prevProps, prevState) {
@@ -72,7 +76,7 @@ const CommentZone = (props) => {
           <Spinner variant="info" />
         </div>
       )}
-      {error && alert && (
+      {error && alert && props.asinId && (
         <Alert variant="danger" onClose={() => setAlert(false)} className="mt-4" dismissible>
           <Alert.Heading>something wrong</Alert.Heading>
           <p>you got error: {status}</p>
