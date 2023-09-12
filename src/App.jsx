@@ -24,7 +24,7 @@ const App = () => {
       <MyNav />
       <MyWelcome title="BENVENUTO!!!" subTitle="ehi tu che stai leggendo questa frase , ciao" />
       <Row>
-        <Col xs={6}>
+        <Col xs={6} style={{ maxHeight: "calc(100vh - 200px)", overflowY: "auto" }}>
           <BookList lista={libri} checkAsinId={checkAsinId} selected={asinId} />
         </Col>
         <Col xs={6}>
