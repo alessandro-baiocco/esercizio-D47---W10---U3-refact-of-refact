@@ -30,7 +30,7 @@ const CommentZone = (props) => {
     }
   };
 
-  const fetchatutto = async (e) => {
+  const fetchatutto = async () => {
     setLoading(true);
     if (!first) {
       try {
@@ -62,13 +62,9 @@ const CommentZone = (props) => {
   //     this.fetchatutto();
   //     console.log(this.props.asinId, prevProps.asinId);
   //   }}
-  useEffect(
-    (e) => {
-      fetchatutto(e);
-      console.log(props.asinId);
-    },
-    [props.asinId]
-  );
+  useEffect(() => {
+    fetchatutto();
+  }, [props.asinId]);
 
   return (
     <span>

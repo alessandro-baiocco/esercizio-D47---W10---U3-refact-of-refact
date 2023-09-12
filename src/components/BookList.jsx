@@ -1,4 +1,4 @@
-import { Component, useState } from "react";
+import { useState } from "react";
 import SingleBook from "./SingleBook";
 import { Container, Row, Col } from "react-bootstrap";
 

@@ -5,7 +5,7 @@ import MyFooter from "./components/MyFooter";
 import MyWelcome from "./components/MyWelcome";
 import BookList from "./components/BookList";
 import libri from "./components/books/scifi.json";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import CommentZone from "./components/CommentZone";
 
