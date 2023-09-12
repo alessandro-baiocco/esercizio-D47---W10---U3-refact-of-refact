@@ -48,6 +48,7 @@ const CommentZone = (props) => {
           setLoading(false);
           setError(true);
           setStatus(response.status);
+          setFirst(false);
         }
       } catch (err) {
         console.log(err);
