@@ -1,22 +1,24 @@
-import { Component } from "react";
+import { useState } from "react";
 
-class FormComment extends Component {
-  state = {
+const FormComment = (props) => {
+  // state = {
+  //   comment: "",
+  //   rate: "1",
+  // };
+
+  const [commentProp, setCommentProp] = useState({
     comment: "",
     rate: "1",
-  };
+    elementId: "",
+  });
 
-  handleChange = (propertyName, propertyValue, elementId, id) => {
-    this.setState({ [propertyName]: propertyValue });
-    this.setState({ [elementId]: id });
-  };
-  invia = async (e) => {
+  const invia = async (e) => {
     e.preventDefault();
 
     try {
       const response = await fetch(`https://striveschool-api.herokuapp.com/api/comments/`, {
         method: "POST",
-        body: JSON.stringify(this.state),
+        body: JSON.stringify(commentProp),
         headers: {
           "Content-Type": "application/json",
           Authorization:
@@ -33,33 +35,31 @@ class FormComment extends Component {
     }
   };
 
-  render() {
-    return (
-      <>
-        <form action="" onSubmit={() => this.setState()}>
-          <input
-            type="text"
-            value={this.state.comment}
-            onChange={(event) => {
-              this.setState({ comment: event.target.value, elementId: this.props.idDelLibro });
-            }}
-          />
-          <input
-            type="number"
-            min={1}
-            max={5}
-            value={this.state.rate}
-            onChange={(event) => {
-              this.setState({ rate: event.target.value });
-            }}
-          />
-          <button type="submit" onClick={(Event) => this.invia(Event)}>
-            invia
-          </button>
-        </form>
-      </>
-    );
-  }
-}
+  return (
+    <>
+      <form action="" onSubmit={(e) => invia(e)}>
+        <input
+          type="text"
+          value={commentProp.comment}
+          onChange={(event) => {
+            setCommentProp({ ...commentProp, comment: event.target.value, elementId: props.id });
+          }}
+        />
+        <input
+          type="number"
+          min={1}
+          max={5}
+          value={commentProp.rate}
+          onChange={(event) => {
+            setCommentProp({ ...commentProp, rate: event.target.value });
+          }}
+        />
+        <button type="submit" onClick={(Event) => invia(Event)}>
+          invia
+        </button>
+      </form>
+    </>
+  );
+};
 
 export default FormComment;
